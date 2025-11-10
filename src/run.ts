@@ -2,7 +2,7 @@ import { type EsvRowType, QuickEsv } from "./index.ts";
 
 async function run() {
     const esvViewModel = new QuickEsv();
-    const list = await esvViewModel.readEsvFile("public/esvFile.esv", "🟩");
+    const list = await esvViewModel.readEsvFile("public/esvFile.esv", "🟩", 10, 10);
     console.log(list);
   
 }

@@ -8,11 +8,11 @@ export class ReadEsv {
         this.repository = repository;
     }
 
-    async execute(filePath: string, separator: string) {
+    async execute(filePath: string, separator: string, skip?: number, limit?: number) {
         const reader = await this.repository.readEsvFile(filePath);
 
         let lineCount = 0;
-        let header: string[];
+        let header: string[] = [];
         const records: EsvRow[] = [];
 
         for await (const line of reader) {
@@ -25,8 +25,21 @@ export class ReadEsv {
                 continue;
             }
 
+            if (skip && skip > 0) {
+                skip--;
+                continue;
+            }
+
+            if (!line) {
+                continue;
+            }
+
+            if (limit && lineCount >= limit) {
+                break;
+            }
+
             lineCount++;
-            const record = this.repository.parseEsvLine(line, header!, separator);
+            const record = this.repository.parseEsvLine(line, header, separator);
             records.push(record);
         }
 

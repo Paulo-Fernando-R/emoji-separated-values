@@ -14,8 +14,8 @@ export class EsvViewModel {
         this.WriteEsv = new WriteEsv(this.repository);
     }
 
-    async readEsvFile(filePath: string, separator: string) {
-        return await new ReadEsv(new FileSystemEsvRepository()).execute(filePath, separator);
+    async readEsvFile(filePath: string, separator: string, skip?: number, limit?: number) {
+        return await new ReadEsv(new FileSystemEsvRepository()).execute(filePath, separator, skip, limit);
     }
     async writeEsvFile(filePath: string, data: EsvRow[], separator: string) {
         new WriteEsv(new FileSystemEsvRepository()).execute(filePath, data, separator);

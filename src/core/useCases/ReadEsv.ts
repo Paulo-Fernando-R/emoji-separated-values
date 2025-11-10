@@ -34,7 +34,7 @@ export class ReadEsv {
                 continue;
             }
 
-            if (limit && lineCount >= limit) {
+            if (limit && lineCount > limit) {
                 break;
             }
 

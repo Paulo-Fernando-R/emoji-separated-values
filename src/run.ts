@@ -1,10 +1,16 @@
-import { type EsvRowType, QuickEsv } from "./index.ts";
+import { type EsvRowType, QuickEsv, EsvFilterOperator } from "./index.ts";
 
 async function run() {
     const esvViewModel = new QuickEsv();
-    const list = await esvViewModel.readEsvFile("public/esvFile.esv", "🟩", 10, 10);
-    console.log(list);
-  
+    // const list = await esvViewModel.readEsvFile("public/esvFile.esv", "🟩", 10, 10);
+    // console.log(list);
+
+    const filterList = await esvViewModel.filterEsvFile("public/esvFile.esv", "🟩", 0, 10, [
+        { field: "Cidade", value: "Rio de Janeiro", operator: EsvFilterOperator.Equals },
+        { field: "Profissao", value: "Arquiteta", operator: EsvFilterOperator.NotEquals },
+        { field: "Idade", value: "28", operator: EsvFilterOperator.LessThanOrEqual },
+    ]);
+    //console.log(filterList);
 }
 const list = [
     {

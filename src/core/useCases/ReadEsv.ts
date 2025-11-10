@@ -9,11 +9,7 @@ export class ReadEsv {
     }
 
     async execute(filePath: string, separator: string) {
-        const reader = await this.repository.readEsvFile(filePath, separator);
-
-        // for await (const line of reader as AsyncIterable<EsvRow>) {
-        //     console.log(line);
-        // }
+        const reader = await this.repository.readEsvFile(filePath);
 
         let lineCount = 0;
         let header: string[];

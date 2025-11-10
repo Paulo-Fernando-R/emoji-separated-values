@@ -13,6 +13,45 @@ export class FileSystemEsvRepository {
         return reader;
     }
 
+    async writeEsvFile(filePath: string, data: EsvRow[], separator: string) {
+        const stream = fs.createWriteStream(filePath, { encoding: "utf-8" });
+
+        let lineCount = 0;
+
+        for (const record of data) {
+            if (lineCount === 0) {
+                const header = Object.keys(record);
+                const headerLine = header.map(this.escapeField).join(separator);
+                stream.write(headerLine + "\n");
+                lineCount++;
+                continue;
+            }
+
+            const values = Object.values(record).map((value) => this.escapeField(String(value)));
+            const line = values.join(separator);
+            stream.write(line + "\n");
+            lineCount++;
+        }
+        stream.end();
+
+        return new Promise<void>((resolve, reject) => {
+            stream.on("finish", () => {
+                console.log("Esv file written successfully");
+                resolve();
+            });
+            stream.on("error", (error) => {
+                reject(error);
+            });
+        });
+    }
+
+    escapeField(valor: string): string {
+        if (/[",\n]/.test(valor)) {
+            return `"${valor.replace(/"/g, '""')}"`;
+        }
+        return valor;
+    }
+
     //função que divide uma linha em campos usando o emoji como separador
     splitEsvLine(line: string, separator: string): string[] {
         return line.split(separator);

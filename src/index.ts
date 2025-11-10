@@ -1,10 +1,10 @@
-import { readEsvFile, writeEsvFile } from "./viewNodel/EsvViewModel.ts";
+import { EsvViewModel } from "./viewNodel/EsvViewModel.ts";
 
 async function main() {
-console.log( await readEsvFile("public/esvFile.esv", "🟩"));
+    const esvViewModel = new EsvViewModel();
+   // console.log(await readEsvFile("public/esvFile.esv", "🟩"));
+    await esvViewModel.writeEsvFile("public/esvFile.esv", list, "🟩");
 }
-
-main();
 
 
 const list = [
@@ -1013,3 +1013,4 @@ const list = [
 ];
 
 //writeEsvFile("./public/esvFile.esv", list);
+main();

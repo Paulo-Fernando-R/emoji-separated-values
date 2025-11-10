@@ -8,7 +8,7 @@ async function run() {
     const filterList = await esvViewModel.filterEsvFile("public/esvFile.esv", "🟩", 0, 10, [
         { field: "Cidade", value: "Rio de Janeiro", operator: EsvFilterOperator.Equals },
         { field: "Profissao", value: "Empresário", operator: EsvFilterOperator.NotEquals },
-        { field: "Idade", value: "20", operator: EsvFilterOperator.LessThanOrEqual },
+        { field: "Idade", value: 20, operator: EsvFilterOperator.LessThanOrEqual },
     ]);
     console.log(filterList);
 }

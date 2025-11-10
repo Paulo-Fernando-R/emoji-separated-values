@@ -13,20 +13,19 @@ export class FileSystemEsvRepository {
         return reader;
     }
 
-    async writeEsvFile(filePath: string, data: EsvRow[], separator: string) {
-        const stream = fs.createWriteStream(filePath, { encoding: "utf-8" });
+    async writeEsvFile(filePath: string, data: EsvRow[], separator: string, flags: string = "a") {
+        const fileExists = await this.fileExists(filePath);
+        const stream = fs.createWriteStream(filePath, { encoding: "utf-8", flags: flags });
 
         let lineCount = 0;
 
-        for (const record of data) {
-            if (lineCount === 0) {
-                const header = Object.keys(record);
-                const headerLine = header.map(this.escapeField).join(separator);
-                stream.write(headerLine + "\n");
-                lineCount++;
-                continue;
-            }
+        if (!fileExists && data.length > 0) {
+            const header = Object.keys(data[0]);
+            const headerLine = header.map(this.escapeField).join(separator);
+            stream.write(headerLine + "\n");
+        }
 
+        for (const record of data) {
             const values = Object.values(record).map((value) => this.escapeField(String(value)));
             const line = values.join(separator);
             stream.write(line + "\n");
@@ -44,6 +43,7 @@ export class FileSystemEsvRepository {
             });
         });
     }
+
 
     escapeField(valor: string): string {
         if (/[",\n]/.test(valor)) {
@@ -75,5 +75,14 @@ export class FileSystemEsvRepository {
         const normalized = trimmedValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
         return normalized;
+    }
+
+    async fileExists(filePath: string): Promise<boolean> {
+        try {
+            fs.accessSync(filePath);
+            return true;
+        } catch {
+            return false;
+        }
     }
 }

@@ -39,10 +39,8 @@ export class FilterEsv {
             const record = this.repository.parseEsvLine(line, header, separator);
 
             if (!this.filterRow(record, filters)) {
-                console.log("filtered", lineCount);
                 continue;
             }
-            console.log("not filtered", lineCount);
 
             if (skip && skip > 0) {
                 skip--;
@@ -66,13 +64,13 @@ export class FilterEsv {
         if (!filters) {
             return true;
         }
+        let filtered = true;
         for (const filter of filters) {
             if (!this.switchOperations(filter.operator, filter, row)) {
-                return false;
+                filtered = false;
             }
-
-            return true;
         }
+        return filtered;
     }
 
     switchOperations(operation: EsvFilterOperator, filter: EsvFilter, row: EsvRow) {
@@ -132,7 +130,6 @@ export class FilterEsv {
                 break;
             case EsvFilterOperator.LessThanOrEqual:
                 const res4 = this.verifyNAN(row[filter.field], filter.value);
-                console.log(res4);
                 if (!res4) return false;
                 return res4.first <= res4.second;
                 break;

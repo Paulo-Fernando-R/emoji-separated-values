@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/index.ts"],"sourcesContent":["\r\nconsole.log(\"Hello, World!\");\r\n\r\nconsole.log(\"This is the entry point of the application.\");"],"mappings":";;;AACA,QAAQ,IAAI,eAAe;AAE3B,QAAQ,IAAI,6CAA6C;","names":[]}

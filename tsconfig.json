@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    /* Linguagem e Módulos */
+    "target": "ES2022",                        // Gera código moderno
+    "module": "ESNext",                        // Usa módulos ES
+    "moduleResolution": "bundler",             // Recomendado para projetos ESM (ou "node16" se preferir)
+    "esModuleInterop": true,                   // Permite importar CommonJS sem problemas
+    "forceConsistentCasingInFileNames": true,  // Evita bugs de case no import
+    "allowSyntheticDefaultImports": true,      // Garante compatibilidade com libs CJS
+
+    /* Tipagem e Segurança */
+    "strict": true,                            // Habilita checagem completa de tipos
+    "skipLibCheck": true,                      // Ignora verificação interna de tipos de libs
+
+    /* Caminhos e Estrutura */
+    "baseUrl": "./src",                        // Define a raiz dos imports relativos
+    "paths": {
+      "@/*": ["./*"]                           // Permite usar imports como `@/utils/helpers`
+    },
+
+    /* Saída */
+    "outDir": "./dist",                        // Diretório de saída dos .js compilados
+    "rootDir": "./src",                        // Raiz do código-fonte
+    "declaration": true,                       // Gera arquivos .d.ts (útil para libs)
+    "sourceMap": true,                         // Gera mapas de origem para debug
+
+    /* Node/ESM */
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,                 // Permite importar arquivos JSON
+    "noEmitOnError": false,                    // Continua emitindo mesmo com warnings
+    "isolatedModules": true                    // Necessário para ferramentas como tsup/tsx
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

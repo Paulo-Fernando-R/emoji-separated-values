@@ -1,36 +1,11 @@
 import fs from "fs";
-import { resolve } from "path";
 import ReadLine from "readline";
+import { FileSystemEsvRepository } from "../infra/fs/FileSystemEsvRepository.ts";
+import { ReadEsv } from "../core/useCases/ReadEsv.ts";
+import { resolve } from "path";
 
-export async function readEsvFile(filePath: string) {
-    const stream = fs.createReadStream(filePath, { encoding: "utf-8" });
-
-    const reader = ReadLine.createInterface({
-        input: stream,
-        crlfDelay: Infinity,
-    });
-
-    let lineCount = 0;
-    let header: string[];
-    const records: EsvRecord[] = [];
-
-    for await (const line of reader) {
-        if (lineCount === 0) {
-            header = splitEsvLine(line).map((h) => normalizeValue(h) as string);
-            console.log("Header:", header);
-            lineCount++;
-            continue;
-        }
-
-        lineCount++;
-        const record = parseEsvLine(line, header!);
-        records.push(record);
-        console.log( record);
-    }
-
-    reader.close();
-    // console.log("Finished reading the file.");
-    return records;
+export async function readEsvFile(filePath: string, separator: string) {
+    return await new ReadEsv(new FileSystemEsvRepository()).execute(filePath, separator);
 }
 
 //função que divide uma linha em campos usando o emoji como separador

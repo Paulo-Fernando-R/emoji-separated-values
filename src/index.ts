@@ -1,6 +1,11 @@
 import { readEsvFile, writeEsvFile } from "./viewNodel/EsvViewModel.ts";
 
-//readEsvFile("C:/Users/pc/Documents/GitHub/emoji-separated-values/public/dados_emoji_2000.txt");
+async function main() {
+console.log( await readEsvFile("public/esvFile.esv", "🟩"));
+}
+
+main();
+
 
 const list = [
     {
@@ -1007,4 +1012,4 @@ const list = [
     },
 ];
 
-writeEsvFile("./public/esvFile.esv", list);
+//writeEsvFile("./public/esvFile.esv", list);

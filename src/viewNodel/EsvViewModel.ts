@@ -21,24 +21,29 @@ export class EsvViewModel {
         this.updateEsv = new UpdateEsv(this.repository);
     }
 
-    async readEsvFile(filePath: string, separator: string, skip?: number, limit?: number) {
+    async readEsvFile(filePath: string, skip?: number, limit?: number, separator: string = "😎") {
         return await this.readEsv.execute(filePath, separator, skip, limit);
     }
-    async writeEsvFile(filePath: string, data: EsvRow[], separator: string) {
+    async writeEsvFile(filePath: string, data: EsvRow[], separator: string = "😎") {
         return await this.writeEsv.execute(filePath, data, separator);
     }
 
     async filterEsvFile(
         filePath: string,
-        separator: string,
         skip?: number,
         limit?: number,
-        filters?: EsvFilter[]
+        filters?: EsvFilter[],
+        separator: string = "😎"
     ) {
         return await this.filterEsv.execute(filePath, separator, skip, limit, filters);
     }
 
-    async updateEsvFile(filePath: string, separator: string, newData: EsvRow, filters: EsvFilter[]) {
+    async updateEsvFile(
+        filePath: string,
+        newData: EsvRow,
+        filters: EsvFilter[],
+        separator: string = "😎"
+    ) {
         return await this.updateEsv.execute(filePath, separator, newData, filters);
     }
 }

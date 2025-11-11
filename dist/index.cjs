@@ -1,11 +1,49 @@
+"use strict";
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/index.ts
+var index_exports = {};
+__export(index_exports, {
+  EsvFilterOperator: () => EsvFilterOperator,
+  ManualEsv: () => ManualEsv,
+  QuickEsv: () => QuickEsv
+});
+module.exports = __toCommonJS(index_exports);
+
 // src/infra/fs/FileSystemEsvRepository.ts
-import ReadLine from "readline";
-import fs from "fs";
+var import_readline = __toESM(require("readline"), 1);
+var import_fs = __toESM(require("fs"), 1);
 var FileSystemEsvRepository = class {
   //le o arquivo e retorna um stream
   async readEsvFile(filePath) {
-    const stream = fs.createReadStream(filePath, { encoding: "utf-8" });
-    const reader = ReadLine.createInterface({
+    const stream = import_fs.default.createReadStream(filePath, { encoding: "utf-8" });
+    const reader = import_readline.default.createInterface({
       input: stream,
       crlfDelay: Infinity
     });
@@ -13,13 +51,13 @@ var FileSystemEsvRepository = class {
   }
   //cria um stream de escrita
   getFileWriteStream(filePath, flags = "a") {
-    const stream = fs.createWriteStream(filePath, { encoding: "utf-8", flags });
+    const stream = import_fs.default.createWriteStream(filePath, { encoding: "utf-8", flags });
     return stream;
   }
   //escreve um arquivo
   async writeEsvFile(filePath, data, separator, flags = "a") {
     const fileExists = await this.fileExists(filePath);
-    const stream = fs.createWriteStream(filePath, { encoding: "utf-8", flags });
+    const stream = import_fs.default.createWriteStream(filePath, { encoding: "utf-8", flags });
     let lineCount = 0;
     if (!fileExists && data.length > 0) {
       const header = Object.keys(data[0]);
@@ -45,11 +83,11 @@ var FileSystemEsvRepository = class {
   }
   //funcao que renomeia um arquivo
   renameFile(oldPath, newPath) {
-    fs.renameSync(oldPath, newPath);
+    import_fs.default.renameSync(oldPath, newPath);
   }
   //funcao que deleta um arquivo
   deleteFile(filePath) {
-    fs.unlinkSync(filePath);
+    import_fs.default.unlinkSync(filePath);
   }
   //funcao que escapa um campo que contenha as seguintes carateres: ", \n
   escapeField(valor) {
@@ -80,7 +118,7 @@ var FileSystemEsvRepository = class {
   //funcao que verifica se um arquivo existe
   async fileExists(filePath) {
     try {
-      fs.accessSync(filePath);
+      import_fs.default.accessSync(filePath);
       return true;
     } catch {
       return false;
@@ -449,9 +487,10 @@ var EsvViewModel = class {
 // src/index.ts
 var QuickEsv = EsvViewModel;
 var ManualEsv = FileSystemEsvRepository;
-export {
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
   EsvFilterOperator,
   ManualEsv,
   QuickEsv
-};
-//# sourceMappingURL=index.js.map
+});
+//# sourceMappingURL=index.cjs.map

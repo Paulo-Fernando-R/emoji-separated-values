@@ -8,3 +8,4 @@ export const ManualEsv = FileSystemEsvRepository;
 export type EsvRowType = EsvRow;
 export type EsvFilterType = EsvFilter;
 export { EsvFilterOperator } from "./core/entities/EsvFilter.ts";
+export * from "./infra/ops/Operations.ts";

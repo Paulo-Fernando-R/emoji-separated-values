@@ -3,7 +3,6 @@ import ReadLine from "readline";
 import fs from "fs";
 
 export class FileSystemEsvRepository {
-
     //le o arquivo e retorna um stream
     async readEsvFile(filePath: string) {
         const stream = fs.createReadStream(filePath, { encoding: "utf-8" });
@@ -46,10 +45,10 @@ export class FileSystemEsvRepository {
         return new Promise<void>((resolve, reject) => {
             stream.on("finish", () => {
                 console.log("Esv file written successfully");
-                resolve();
+                return resolve();
             });
             stream.on("error", (error) => {
-                reject(error);
+                return reject(error);
             });
         });
     }

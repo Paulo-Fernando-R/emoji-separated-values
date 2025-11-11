@@ -66,14 +66,14 @@ export class UpdateEsv {
             writer.on("finish", () => {
                 if (!updated) {
                     this.repository.deleteFile(this.tempPath);
-                    reject(new Error("No record updated"));
+                    return reject(new Error("No record updated"));
                 }
                 console.log("Esv file updated successfully");
                 this.repository.renameFile(this.tempPath, filePath);
-                resolve();
+                return resolve();
             });
             writer.on("error", (error) => {
-                reject(error);
+                return reject(error);
             });
         });
     }

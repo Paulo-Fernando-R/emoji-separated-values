@@ -47,14 +47,13 @@ export class DeleteEsv {
             }
 
             const record = this.repository.parseEsvLine(line, header, separator);
-
-            if (!this.operations.filterRow(record, filters)) {
-                writer.write(line + "\n");
-                continue;
-            }
-
             lineCount++;
-            updated = true;
+
+            if (this.operations.filterRow(record, filters)) {
+                updated = true;
+            } else {
+                writer.write(line + "\n");
+            }
         }
 
         reader.close();
@@ -64,14 +63,14 @@ export class DeleteEsv {
             writer.on("finish", () => {
                 if (!updated) {
                     this.repository.deleteFile(this.tempPath);
-                    reject(new Error("No record deleted"));
+                    return reject(new Error("No record deleted"));
                 }
                 console.log("Esv record deleted successfully");
                 this.repository.renameFile(this.tempPath, filePath);
-                resolve();
+                return resolve();
             });
             writer.on("error", (error) => {
-                reject(error);
+                return reject(error);
             });
         });
     }

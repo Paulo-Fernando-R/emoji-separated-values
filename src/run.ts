@@ -1,4 +1,11 @@
-import { type EsvRowType, QuickEsv, EsvFilterOperator } from "./index.ts";
+import {
+    type EsvRowType,
+    QuickEsv,
+    EsvFilterOperator,
+    Operations,
+    ManualEsv,
+    type EsvFilterType,
+} from "./index.ts";
 
 const filters = [
     { field: "Cidade", value: "Rio de Janeiro", operator: EsvFilterOperator.Equals },
@@ -7,13 +14,14 @@ const filters = [
 ];
 
 async function run() {
-  await filter();
-  await delte();
-  await filter();
+    await filter();
+    await update();
+    await filter();
 }
 
 async function read() {
     const esvViewModel = new QuickEsv();
+
     const list = await esvViewModel.readEsvFile("public/esvFile.esv", 10, 10, "🟩");
     console.log(list);
 }
@@ -23,6 +31,17 @@ async function filter() {
 
     const filterList = await esvViewModel.filterEsvFile("public/esvFile.esv", 0, 10, filters, "🟩");
     console.log(filterList);
+}
+
+async function update() {
+    const esvViewModel = new QuickEsv();
+
+    await esvViewModel.updateEsvFile(
+        "public/esvFile.esv",
+        { Nome: "João", Idade: "28", Cidade: "Rio de Janeiro", Profissao: "Arquiteta" },
+        filters,
+        "🟩"
+    );
 }
 
 async function appendFile() {

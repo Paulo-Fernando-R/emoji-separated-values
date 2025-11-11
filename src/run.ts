@@ -1,7 +1,15 @@
 import { type EsvRowType, QuickEsv, EsvFilterOperator } from "./index.ts";
 
+const filters = [
+    { field: "Cidade", value: "Rio de Janeiro", operator: EsvFilterOperator.Equals },
+    { field: "Profissao", value: "Empresário", operator: EsvFilterOperator.NotEquals },
+    { field: "Idade", value: 20, operator: EsvFilterOperator.LessThanOrEqual },
+];
+
 async function run() {
-    const esvViewModel = new QuickEsv();
+  await filter();
+  await delte();
+  await filter();
 }
 
 async function read() {
@@ -13,13 +21,7 @@ async function read() {
 async function filter() {
     const esvViewModel = new QuickEsv();
 
-    const filters = [
-        { field: "Cidade", value: "Rio de Janeiro", operator: EsvFilterOperator.Equals },
-        { field: "Profissao", value: "Empresário", operator: EsvFilterOperator.NotEquals },
-        { field: "Idade", value: 20, operator: EsvFilterOperator.LessThanOrEqual },
-    ];
-
-    const filterList = await esvViewModel.filterEsvFile("public/esvFile.esv", 8, 10, filters, "🟩");
+    const filterList = await esvViewModel.filterEsvFile("public/esvFile.esv", 0, 10, filters, "🟩");
     console.log(filterList);
 }
 
@@ -27,6 +29,11 @@ async function appendFile() {
     const esvViewModel = new QuickEsv();
 
     await esvViewModel.writeEsvFile("public/esvFile.esv", list, "🟩");
+}
+
+async function delte() {
+    const esvViewModel = new QuickEsv();
+    await esvViewModel.deleteEsvFile("public/esvFile.esv", filters, "🟩");
 }
 
 const list = [
@@ -1035,6 +1042,6 @@ const list = [
 ];
 
 //appendFile();
-//run();
+run();
 
-filter();
+//filter();

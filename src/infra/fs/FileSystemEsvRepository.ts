@@ -1,7 +1,10 @@
 import { type EsvRow } from "../../core/entities/EsvRow.ts";
 import ReadLine from "readline";
 import fs from "fs";
+
 export class FileSystemEsvRepository {
+
+    //le o arquivo e retorna um stream
     async readEsvFile(filePath: string) {
         const stream = fs.createReadStream(filePath, { encoding: "utf-8" });
 
@@ -13,11 +16,13 @@ export class FileSystemEsvRepository {
         return reader;
     }
 
+    //cria um stream de escrita
     getFileWriteStream(filePath: string, flags: string = "a") {
         const stream = fs.createWriteStream(filePath, { encoding: "utf-8", flags: flags });
         return stream;
     }
 
+    //escreve um arquivo
     async writeEsvFile(filePath: string, data: EsvRow[], separator: string, flags: string = "a") {
         const fileExists = await this.fileExists(filePath);
         const stream = fs.createWriteStream(filePath, { encoding: "utf-8", flags: flags });
@@ -48,14 +53,18 @@ export class FileSystemEsvRepository {
             });
         });
     }
+
+    //funcao que renomeia um arquivo
     renameFile(oldPath: string, newPath: string) {
         fs.renameSync(oldPath, newPath);
     }
 
+    //funcao que deleta um arquivo
     deleteFile(filePath: string) {
         fs.unlinkSync(filePath);
     }
 
+    //funcao que escapa um campo que contenha as seguintes carateres: ", \n
     escapeField(valor: string): string {
         if (/[",\n]/.test(valor)) {
             return `"${valor.replace(/"/g, '""')}"`;
@@ -80,6 +89,7 @@ export class FileSystemEsvRepository {
         return record;
     }
 
+    //funcao que normaliza um valor sem acento
     normalizeValue(value: string): string | number | boolean {
         const trimmedValue = value.trim();
 
@@ -88,6 +98,7 @@ export class FileSystemEsvRepository {
         return normalized;
     }
 
+    //funcao que verifica se um arquivo existe
     async fileExists(filePath: string): Promise<boolean> {
         try {
             fs.accessSync(filePath);

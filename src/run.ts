@@ -36,16 +36,16 @@ async function read() {
 }
 
 async function filter() {
-    const esvViewModel = new QuickEsv();
+    const esv = new QuickEsv();
 
-    const filterList = await esvViewModel.filterEsvFile("public/esvFile.esv", 0, 10, filters, "🟩");
+    const filterList = await esv.filterEsvFile("public/esvFile.esv", 0, 10, filters, "🟩");
     console.log(filterList);
 }
 
 async function update() {
-    const esvViewModel = new QuickEsv();
+    const esv = new QuickEsv();
 
-    await esvViewModel.updateEsvFile(
+    await esv.updateEsvFile(
         "public/esvFile.esv",
         { Nome: "João", Idade: "28", Cidade: "Rio de Janeiro", Profissao: "Arquiteta" },
         filters,
@@ -53,10 +53,10 @@ async function update() {
     );
 }
 
-async function appendFile() {
-    const esvViewModel = new QuickEsv();
+async function write() {
+    const esv = new QuickEsv();
 
-    await esvViewModel.writeEsvFile("public/esvFile.esv", list, "🟩");
+    await esv.writeEsvFile("public/esvFile.esv", list, "🟩");
 }
 
 async function delte() {

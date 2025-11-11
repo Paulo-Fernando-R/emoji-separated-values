@@ -1,17 +1,27 @@
 {
-    "name": "emoji-separated-values",
+    "name": "@paulof25/emoji-separated-values",
     "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "description": "emoji-separated-values (or simply ESV) is your new favorite npm package for handling text-based data. Forget about boring commas — we use emojis as delimiters. Because why not?",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "scripts": {
         "test": "tsx src/run.ts",
         "build": "tsup",
         "dev": "node src/index.ts",
         "start": "node dist/index.js"
     },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
+    "keywords": [
+        "node",
+        "typescript",
+        "esv",
+        "emoji-separated-values",
+        "csv",
+        "lightwheight-database",
+        "comma-separated-values",
+        "json"
+    ],
+    "author": "Paulo F",
+    "license": "MIT",
     "type": "module",
     "devDependencies": {
         "@types/node": "^24.10.0",

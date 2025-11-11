@@ -1,4 +1,4 @@
-# 😎 emoji-separated-values (.ESV)
+# 😎 @paulof25/emoji-separated-values (.ESV)
 
 > The modern, fun, and slightly absurd alternative to `.CSV` files.
 
@@ -29,14 +29,9 @@ Even though the project itself wasn’t built that way (thankfully), the spirit 
 ## ⚙️ Installation
 
 ```bash
-npm install emoji-separated-values
+npm install @paulof25/emoji-separated-values
 ```
 
-or with yarn:
-
-```bash
-yarn add emoji-separated-values
-```
 
 ---
 
@@ -45,7 +40,7 @@ yarn add emoji-separated-values
 ### 🟢 Reading — Simple Example
 
 ```ts
-import { QuickEsv } from "emoji-separated-values";
+import { QuickEsv } from "@paulof25/emoji-separated-values";
 
 async function read() {
   const esv = new QuickEsv();
@@ -72,7 +67,7 @@ import {
   EsvFilterOperator,
   QuickEsv,
   type EsvFilterType
-} from "emoji-separated-values";
+} from "@paulof25/emoji-separated-values";
 
 const filters = [
   { field: "City", value: "Rio de Janeiro", operator: EsvFilterOperator.Equals },
@@ -92,7 +87,7 @@ async function filter() {
 ### ✍️ Writing
 
 ```ts
-import { QuickEsv, type EsvRowType } from "emoji-separated-values";
+import { QuickEsv, type EsvRowType } from "@paulof25/emoji-separated-values";
 
 const data: EsvRowType[] = [
   { Name: "João", Age: "28", City: "Rio de Janeiro", Profession: "Architect" },
@@ -119,7 +114,7 @@ import {
   type EsvFilterType,
   QuickEsv,
   type EsvRowType
-} from "emoji-separated-values";
+} from "@paulof25/emoji-separated-values";
 
 const filters = [
   { field: "City", value: "Rio de Janeiro", operator: EsvFilterOperator.Equals },
@@ -147,7 +142,7 @@ import {
   EsvFilterOperator,
   QuickEsv,
   type EsvFilterType
-} from "emoji-separated-values";
+} from "@paulof25/emoji-separated-values";
 
 const filters = [
   { field: "City", value: "Rio de Janeiro", operator: EsvFilterOperator.Equals },
@@ -197,7 +192,7 @@ Please make sure to write clear commit messages and keep the humor consistent.
 
 ## 🪪 License
 
-MIT License © 2025 — [Your Name Here]  
+MIT License © 2025 — PauloF25 
 Feel free to use, modify, and share this package as long as you don’t replace the emojis with commas. That would be blasphemy.
 
 ---
@@ -224,7 +219,7 @@ If you’re handling a huge `.ESV` file (or if you just want to look smart in fr
 ### 📖 Manual Read (No Filters)
 
 ```ts
-import { ManualEsv, type EsvRowType } from "emoji-separated-values";
+import { ManualEsv, type EsvRowType } from "@paulof25/emoji-separated-values";
 
 export class ReadEsv {
   repository: ManualEsv;
@@ -278,7 +273,7 @@ import {
   type EsvRowType,
   type EsvFilterType,
   Operations
-} from "emoji-separated-values";
+} from "@paulof25/emoji-separated-values";
 
 export class FilterEsv {
   repository: ManualEsv;
@@ -343,7 +338,7 @@ import {
   type EsvRowType,
   type EsvFilterType,
   Operations
-} from "emoji-separated-values";
+} from "@paulof25/emoji-separated-values";
 
 export class UpdateEsv {
   repository: ManualEsv;
@@ -434,7 +429,7 @@ export class UpdateEsv {
 ### 💀 Manual Delete
 
 ```ts
-import { ManualEsv, type EsvFilterType, Operations } from "emoji-separated-values";
+import { ManualEsv, type EsvFilterType, Operations } from "@paulof25/emoji-separated-values";
 
 export class DeleteEsv {
   repository: ManualEsv;

@@ -1,11 +1,20 @@
+// import {
+//     type EsvRowType,
+//     QuickEsv,
+//     EsvFilterOperator,
+//     Operations,
+//     ManualEsv,
+//     type EsvFilterType,
+// } from "./index.ts";
+
 import {
-    type EsvRowType,
-    QuickEsv,
     EsvFilterOperator,
+    QuickEsv,
     Operations,
     ManualEsv,
     type EsvFilterType,
-} from "./index.ts";
+    type EsvRowType,
+} from "../dist";
 
 const filters = [
     { field: "Cidade", value: "Rio de Janeiro", operator: EsvFilterOperator.Equals },
@@ -15,8 +24,8 @@ const filters = [
 
 async function run() {
     await filter();
-    await update();
-    await filter();
+   // await update();
+   // await filter();
 }
 
 async function read() {

@@ -51,9 +51,18 @@ declare class FileSystemEsvRepository {
     fileExists(filePath: string): Promise<boolean>;
 }
 
+declare class Operations {
+    filterRow(row: EsvRow, filters?: EsvFilter[]): boolean;
+    switchOperations(operation: EsvFilterOperator, filter: EsvFilter, row: EsvRow): boolean | undefined;
+    verifyNAN(first: string | number | boolean, second: string | number | boolean): {
+        first: number;
+        second: number;
+    } | null;
+}
+
 declare const QuickEsv: typeof EsvViewModel;
 declare const ManualEsv: typeof FileSystemEsvRepository;
 type EsvRowType = EsvRow;
 type EsvFilterType = EsvFilter;
 
-export { EsvFilterOperator, type EsvFilterType, type EsvRowType, ManualEsv, QuickEsv };
+export { EsvFilterOperator, type EsvFilterType, type EsvRowType, ManualEsv, Operations, QuickEsv };

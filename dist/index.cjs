@@ -32,6 +32,7 @@ var index_exports = {};
 __export(index_exports, {
   EsvFilterOperator: () => EsvFilterOperator,
   ManualEsv: () => ManualEsv,
+  Operations: () => Operations,
   QuickEsv: () => QuickEsv
 });
 module.exports = __toCommonJS(index_exports);
@@ -74,10 +75,10 @@ var FileSystemEsvRepository = class {
     return new Promise((resolve, reject) => {
       stream.on("finish", () => {
         console.log("Esv file written successfully");
-        resolve();
+        return resolve();
       });
       stream.on("error", (error) => {
-        reject(error);
+        return reject(error);
       });
     });
   }
@@ -359,14 +360,14 @@ var UpdateEsv = class {
       writer.on("finish", () => {
         if (!updated) {
           this.repository.deleteFile(this.tempPath);
-          reject(new Error("No record updated"));
+          return reject(new Error("No record updated"));
         }
         console.log("Esv file updated successfully");
         this.repository.renameFile(this.tempPath, filePath);
-        resolve();
+        return resolve();
       });
       writer.on("error", (error) => {
-        reject(error);
+        return reject(error);
       });
     });
   }
@@ -421,12 +422,12 @@ var DeleteEsv = class {
         continue;
       }
       const record = this.repository.parseEsvLine(line, header, separator);
-      if (!this.operations.filterRow(record, filters)) {
-        writer.write(line + "\n");
-        continue;
-      }
       lineCount++;
-      updated = true;
+      if (this.operations.filterRow(record, filters)) {
+        updated = true;
+      } else {
+        writer.write(line + "\n");
+      }
     }
     reader.close();
     writer.end();
@@ -434,14 +435,14 @@ var DeleteEsv = class {
       writer.on("finish", () => {
         if (!updated) {
           this.repository.deleteFile(this.tempPath);
-          reject(new Error("No record deleted"));
+          return reject(new Error("No record deleted"));
         }
         console.log("Esv record deleted successfully");
         this.repository.renameFile(this.tempPath, filePath);
-        resolve();
+        return resolve();
       });
       writer.on("error", (error) => {
-        reject(error);
+        return reject(error);
       });
     });
   }
@@ -491,6 +492,7 @@ var ManualEsv = FileSystemEsvRepository;
 0 && (module.exports = {
   EsvFilterOperator,
   ManualEsv,
+  Operations,
   QuickEsv
 });
 //# sourceMappingURL=index.cjs.map

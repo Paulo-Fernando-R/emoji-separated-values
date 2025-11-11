@@ -13,6 +13,11 @@ export class FileSystemEsvRepository {
         return reader;
     }
 
+    getFileWriteStream(filePath: string, flags: string = "a") {
+        const stream = fs.createWriteStream(filePath, { encoding: "utf-8", flags: flags });
+        return stream;
+    }
+
     async writeEsvFile(filePath: string, data: EsvRow[], separator: string, flags: string = "a") {
         const fileExists = await this.fileExists(filePath);
         const stream = fs.createWriteStream(filePath, { encoding: "utf-8", flags: flags });
@@ -43,7 +48,13 @@ export class FileSystemEsvRepository {
             });
         });
     }
+    renameFile(oldPath: string, newPath: string) {
+        fs.renameSync(oldPath, newPath);
+    }
 
+    deleteFile(filePath: string) {
+        fs.unlinkSync(filePath);
+    }
 
     escapeField(valor: string): string {
         if (/[",\n]/.test(valor)) {

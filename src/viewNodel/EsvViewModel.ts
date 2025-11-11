@@ -2,6 +2,7 @@ import { FileSystemEsvRepository } from "../infra/fs/FileSystemEsvRepository.ts"
 import { ReadEsv } from "../core/useCases/ReadEsv.ts";
 import { WriteEsv } from "../core/useCases/WriteEsv.ts";
 import { FilterEsv } from "../core/useCases/FilterEsv.ts";
+import { UpdateEsv } from "../core/useCases/UpdateEsv.ts";
 import { type EsvRow } from "../core/entities/EsvRow.ts";
 import { type EsvFilter } from "../core/entities/EsvFilter.ts";
 
@@ -10,12 +11,14 @@ export class EsvViewModel {
     readEsv: ReadEsv;
     writeEsv: WriteEsv;
     filterEsv: FilterEsv;
+    updateEsv: UpdateEsv;
 
     constructor() {
         this.repository = new FileSystemEsvRepository();
         this.readEsv = new ReadEsv(this.repository);
         this.writeEsv = new WriteEsv(this.repository);
         this.filterEsv = new FilterEsv(this.repository);
+        this.updateEsv = new UpdateEsv(this.repository);
     }
 
     async readEsvFile(filePath: string, separator: string, skip?: number, limit?: number) {
@@ -33,5 +36,9 @@ export class EsvViewModel {
         filters?: EsvFilter[]
     ) {
         return await this.filterEsv.execute(filePath, separator, skip, limit, filters);
+    }
+
+    async updateEsvFile(filePath: string, separator: string, newData: EsvRow, filters: EsvFilter[]) {
+        return await this.updateEsv.execute(filePath, separator, newData, filters);
     }
 }
